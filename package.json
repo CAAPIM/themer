@@ -1,0 +1,83 @@
+{
+  "name": "themer",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "CA Technologies",
+  "description": "Generate inline styles defined in JavaScript",
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "eslint ./src/ --ext .js",
+    "test": "mocha --reporter nyan --compilers js:babel-core/register ./tests/**/**/*.js",
+    "test:coverage": "babel-node ./node_modules/.bin/isparta cover --include './src/**/**/*.js' _mocha -- --reporter nyan './tests/**/*.spec.js'",
+    "commit": "git-cz",
+    "build": "babel --out-dir ./lib --ignore *.spec.js, ./src",
+    "release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
+  "dependencies": {
+    "chai": "3.5.0",
+    "lodash": "4.17.2",
+    "recompose": "^0.20.2",
+    "sinon": "1.17.6",
+    "uuid": "^3.0.1"
+  },
+  "devDependencies": {
+    "babel": "6.5.2",
+    "babel-cli": "^6.18.0",
+    "babel-core": "6.20.0",
+    "babel-eslint": "7.1.1",
+    "babel-loader": "6.2.9",
+    "babel-plugin-react-transform": "2.0.2",
+    "babel-plugin-transform-decorators-legacy": "1.3.4",
+    "babel-plugin-transform-object-rest-spread": "6.20.2",
+    "babel-plugin-transform-runtime": "6.15.0",
+    "babel-polyfill": "6.20.0",
+    "babel-preset-es2015": "6.18.0",
+    "babel-preset-jest": "17.0.2",
+    "babel-preset-react": "6.16.0",
+    "babel-preset-stage-0": "6.16.0",
+    "codecov": "1.0.1",
+    "commitizen": "2.8.6",
+    "cz-conventional-changelog": "1.2.0",
+    "eslint": "^3.12.0",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-loader": "^1.6.1",
+    "eslint-plugin-cssx": "0.3.3",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.1",
+    "eslint-plugin-react": "6.8.0",
+    "isparta": "4.0.0",
+    "istanbul": "1.1.0-alpha.1",
+    "mocha": "3.2.0",
+    "pre-commit": "^1.2.1",
+    "semantic-release": "6.3.2",
+    "validate-commit-msg": "^2.8.2"
+  },
+  "keywords": [
+    "JS",
+    "CSS",
+    "Themer"
+  ],
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    },
+    "config": {
+      "validate-commit-msg": {
+        "types": ["feat", "fix", "docs", "style", "refactor", "perf", "test", "chore", "revert"],
+        "warnOnFail": false,
+        "maxSubjectLength": 100,
+        "subjectPattern": ".+",
+        "subjectPatternErrorMsg": "subject does not match subject pattern!",
+        "helpMessage": ""
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CAAPIM/themer.git"
+  }
+}

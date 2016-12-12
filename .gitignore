@@ -1,0 +1,11 @@
+# Logs
+*.log
+
+# Coverage tools
+coverage
+
+# Dependency directory
+node_modules
+
+# Build
+lib

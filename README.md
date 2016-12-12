@@ -1,9 +1,10 @@
 # Themer
 
-[![Build Status](https://travis-ci.org/shanedasilva/themer.svg?branch=master)](https://travis-ci.org/shanedasilva/themer)
-[![codecov](https://codecov.io/gh/shanedasilva/themer/branch/master/graph/badge.svg)](https://codecov.io/gh/shanedasilva/themer)
-[![dependencies](https://david-dm.org/shanedasilva/themer.svg)](https://david-dm.org/shanedasilva/themer)
-[![devDependency Status](https://david-dm.org/shanedasilva/themer/dev-status.svg)](https://david-dm.org/shanedasilva/themer#info=devDependencies)
+[![Build Status](https://travis-ci.org/CAAPIM/themer.svg?branch=master)](https://travis-ci.org/CAAPIM/themer)
+[![codecov](https://codecov.io/gh/CAAPIM/themer/branch/master/graph/badge.svg)](https://codecov.io/gh/CAAPIM/themer)
+[![dependencies](https://david-dm.org/CAAPIM/themer.svg)](https://david-dm.org/CAAPIM/themer)
+[![devDependency Status](https://david-dm.org/CAAPIM/themer/dev-status.svg)](https://david-dm.org/CAAPIM/themer#info=devDependencies)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ## Installation
 

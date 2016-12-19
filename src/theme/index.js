@@ -6,7 +6,7 @@
 
 import uuid from 'uuid';
 import { isObject, isFunction } from 'lodash';
-import { objectHasFunction, flatten, resolve } from './../utils';
+import { arrayHasFunction, flatten, resolve } from './../utils';
 
 export default class Theme {
 
@@ -114,7 +114,7 @@ export default class Theme {
   combine(themes = []) {
     const truthy = val => val;
 
-    let resolvedTheme = themes
+    const resolvedTheme = themes
       .map(Theme.parse)
       .filter(truthy)
       .reduce((previousTheme, currentTheme) => ({
@@ -145,7 +145,7 @@ export default class Theme {
    * @return {Object}           Resolved theme variables, where local vars take priority
    */
   getVariables(variables = {}) {
-    if (isFunction(this.theme.variables) || objectHasFunction(this.theme.variables)) {
+    if (isFunction(this.theme.variables) || arrayHasFunction(this.theme.variables)) {
       return resolve(this.theme.variables, variables);
     }
 
@@ -159,7 +159,7 @@ export default class Theme {
    * @return {Object}           Resolved styles object
    */
   getStyles(variables = {}) {
-    if (isFunction(this.theme.styles) || objectHasFunction(this.theme.styles)) {
+    if (isFunction(this.theme.styles) || arrayHasFunction(this.theme.styles)) {
       return resolve(this.theme.styles, variables);
     }
 

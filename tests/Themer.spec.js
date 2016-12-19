@@ -150,26 +150,6 @@ describe('Themer', () => {
     expect(resolvedStyles).to.deep.equal(testFuncTheme.styles());
   });
 
-  it('should accept theme.styles as a function', () => {
-    const testFuncTheme = {
-      styles: () => {
-        return {
-          header: () => {
-            return {
-              color: 'red',
-              margin: 0,
-            };
-          },
-        };
-      },
-    };
-
-    testInstance = create({ themes: [testFuncTheme] });
-    const resolvedStyles = testInstance.getThemeStyles();
-
-    expect(resolvedStyles.header).to.deep.equal(testFuncTheme.styles().header());
-  });
-
   describe('render', () => {
     it('should provide the rendered HTML snippet with styles resolved and mapped', () => {
       testInstance = create({ themes: [testTheme] });

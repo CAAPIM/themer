@@ -96,6 +96,28 @@ export default class Themer {
   }
 
   /**
+   * Resolves all theme properties and middlewares
+   *
+   * @param  {Function} snippet Function that returns valid HTML markup
+   * @param  {array} themes  Array of themes
+   * @return {Object}         Resolved theme and snippet attrs
+   */
+  resolveAttributes(snippet, themes) {
+    const theme = new Theme(themes);
+    const variables = theme.getVariables();
+    const styles = theme.getStyles(variables);
+    const resolvedSnippet = this.middleware.resolve(snippet, styles);
+
+    return {
+      snippet: resolvedSnippet,
+      theme: {
+        variables,
+        styles,
+      },
+    };
+  }
+
+  /**
    * Returns a snippet of HTML with a computed theme object passed into it
    *
    * @param  {Function} snippet Function that returns valid HTML markup

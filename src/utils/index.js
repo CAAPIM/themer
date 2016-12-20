@@ -25,7 +25,7 @@ export function createThemer(options = {}) {
  * @public
  */
 export function arrayHasFunction(arr = []) {
-  const hasFunction = find(arr, (val) => isFunction(arr[val]));
+  const hasFunction = find(arr, (val) => isFunction(val));
 
   return !!hasFunction;
 }

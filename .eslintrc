@@ -1,21 +1,4 @@
 {
-  parser: "babel-eslint",
-  "extends": "airbnb",
-  "rules": {
-    "max-len": [1, 120, 2, {ignoreComments: true}],
-    "arrow-body-style": 0,
-    "prefer-const": 0,
-    "no-plusplus": 0,
-    "no-unused-expressions": 0,
-    "class-methods-use-this": 0,
-    "no-param-reassign": 0,
-    "no-prototype-builtins": 0,
-    "no-restricted-syntax": 0
-  },
-  "globals": {
-    "it": false,
-    "expect": false,
-    "describe": false,
-    beforeEach
-  },
+  "parser": "babel-eslint",
+  "extends": "ca",
 }

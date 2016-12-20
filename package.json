@@ -11,7 +11,9 @@
     "test:coverage": "babel-node ./node_modules/.bin/isparta cover --include './src/**/**/*.js' _mocha -- --reporter nyan './tests/**/*.spec.js'",
     "commit": "git-cz",
     "build": "babel --out-dir ./lib --ignore *.spec.js, ./src",
-    "release": "semantic-release pre && npm publish && semantic-release post"
+    "release": "semantic-release pre && npm publish && semantic-release post",
+    "commitmsg": "validate-commit-msg",
+    "precommit": "npm run lint && npm run test"
   },
   "pre-commit": [
     "lint",
@@ -43,18 +45,15 @@
     "commitizen": "2.8.6",
     "cz-conventional-changelog": "1.2.0",
     "eslint": "^3.12.0",
-    "eslint-config-airbnb": "^13.0.0",
-    "eslint-loader": "^1.6.1",
-    "eslint-plugin-cssx": "0.3.3",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^3.0.1",
-    "eslint-plugin-react": "6.8.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-config-ca": "git+ssh://git@github.com:CAAPIM/eslint-config-ca.git",
     "isparta": "4.0.0",
     "istanbul": "1.1.0-alpha.1",
     "mocha": "3.2.0",
     "pre-commit": "^1.2.1",
     "semantic-release": "6.3.2",
-    "validate-commit-msg": "^2.8.2"
+    "validate-commit-msg": "^2.8.2",
+    "husky": "^0.11.9"
   },
   "keywords": [
     "JS",
@@ -65,15 +64,8 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     },
-    "config": {
-      "validate-commit-msg": {
-        "types": ["feat", "fix", "docs", "style", "refactor", "perf", "test", "chore", "revert"],
-        "warnOnFail": false,
-        "maxSubjectLength": 100,
-        "subjectPattern": ".+",
-        "subjectPatternErrorMsg": "subject does not match subject pattern!",
-        "helpMessage": ""
-      }
+    "validate-commit-msg": {
+      "types": "conventional-commit-types"
     }
   },
   "repository": {

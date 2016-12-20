@@ -133,6 +133,15 @@ describe('Themer', () => {
       const renderedSnippet = testInstance.render(snippet, { content: 'Hello' });
       expect(renderedSnippet).to.equal(`<h1 class="${testFunctionTheme.styles().header}">Hello</h1>`);
     });
+
+    it('should return the resolved snippet and theme attributes', () => {
+      testInstance = create();
+      const resolvedAttrs = testInstance.resolveAttributes(snippet, [testTheme]);
+
+      expect(resolvedAttrs).to.be.a('object');
+      expect(resolvedAttrs.theme).to.deep.exist;
+      expect(resolvedAttrs.snippet).to.deep.exist;
+    });
   });
 
   it('should accept theme.styles as a function', () => {
@@ -148,26 +157,6 @@ describe('Themer', () => {
     const resolvedStyles = testInstance.getThemeStyles();
 
     expect(resolvedStyles).to.deep.equal(testFuncTheme.styles());
-  });
-
-  it('should accept theme.styles as a function', () => {
-    const testFuncTheme = {
-      styles: () => {
-        return {
-          header: () => {
-            return {
-              color: 'red',
-              margin: 0,
-            };
-          },
-        };
-      },
-    };
-
-    testInstance = create({ themes: [testFuncTheme] });
-    const resolvedStyles = testInstance.getThemeStyles();
-
-    expect(resolvedStyles.header).to.deep.equal(testFuncTheme.styles().header());
   });
 
   describe('render', () => {

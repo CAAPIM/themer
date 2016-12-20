@@ -4,7 +4,7 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-import { isFunction, isObject } from 'lodash';
+import { isFunction, isArray, find } from 'lodash';
 import Themer from './../Themer';
 
 /**
@@ -18,16 +18,14 @@ export function createThemer(options = {}) {
 }
 
 /**
- * Loops through object and checks to see if any values are of type function
+ * Loops through array and checks to see if any values are of type function
  *
- * @param  {Object}  obj The array to scan
- * @return {Boolean}     If any values are of type function
+ * @param  {array}  arr The array to scan
+ * @return {Boolean}    If any values are of type function
  * @public
  */
-export function objectHasFunction(obj = {}) {
-  const hasFunction = Object.keys(obj).find((val) => {
-    return isFunction(obj[val]);
-  });
+export function arrayHasFunction(arr = []) {
+  const hasFunction = find(arr, (val) => isFunction(val));
 
   return !!hasFunction;
 }
@@ -40,9 +38,8 @@ export function objectHasFunction(obj = {}) {
  * @public
  */
 export function flatten(arr) {
-  return arr.reduce((flat, toFlatten) => {
-    return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
-  }, []);
+  return arr.reduce((flat, toFlatten) =>
+    flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten), []);
 }
 
 /**
@@ -53,24 +50,18 @@ export function flatten(arr) {
  * @return {Object}                Contains only flat properties, no functions
  * @public
  */
-export function resolve(obj, ...args) {
-  if (isFunction(obj)) {
-    obj = obj(...args);
-  }
+export function resolve(arrayToResolve, ...args) {
+  const arr = isArray(arrayToResolve) ? arrayToResolve : [arrayToResolve];
 
-  if (isObject(obj)) {
-    for (let prop in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, prop)) {
-        if (isFunction(obj[prop])) {
-          obj[prop] = obj[prop](...args);
-        }
-
-        if (isObject(obj[prop])) {
-          obj[prop] = resolve(obj[prop], ...args);
-        }
-      }
+  return arr.reduce((accumulator, val) => {
+    if (!val) {
+      return accumulator;
     }
-  }
 
-  return obj;
+    if (isFunction(val)) {
+      return val(accumulator, ...args);
+    }
+
+    return val;
+  }, {});
 }

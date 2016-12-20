@@ -13,8 +13,6 @@ export { themer, create };
 export default (component, rawTheme) => {
   themer.setTheme([rawTheme]);
 
-  return (props) => {
-    return themer.render(component, props);
-  };
+  return (props) => themer.render(component, props);
 };
 

@@ -101,9 +101,7 @@ describe('Themer', () => {
       testInstance = create({ themes: [testTheme, {}] });
       const resolvedStyles = testInstance.getThemeStyles();
 
-      expect(resolvedStyles.length).to.equal(2);
-      expect(resolvedStyles[0]).to.deep.equal(testTheme.styles);
-      expect(resolvedStyles[1]).to.deep.equal({});
+      expect(resolvedStyles).to.deep.equal(testTheme.styles);
     });
 
     it('should throw an error if theme is not an object or function', () => {

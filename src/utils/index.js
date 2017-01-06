@@ -31,18 +31,6 @@ export function arrayHasFunction(arr = []) {
 }
 
 /**
- * Flattens an n-dimensional array
- *
- * @param  {Array} arr Collection of arrays to flatten
- * @return {Array}     Flattened array
- * @public
- */
-export function flatten(arr) {
-  return arr.reduce((flat, toFlatten) =>
-    flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten), []);
-}
-
-/**
  * Called if theme styles or vars are functions that need to be executed
  *
  * @param  {Array} arrayToResolve  The raw array passed in

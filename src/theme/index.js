@@ -5,6 +5,7 @@
  */
 
 import uuid from 'uuid';
+import objectAssign from 'object-assign';
 import { isObject, isFunction } from 'lodash';
 import { arrayHasFunction, resolve } from './../utils';
 
@@ -80,7 +81,7 @@ export default class Theme {
       return theme2[attr];
     }
 
-    return Object.assign(theme2[attr], theme1[attr]);
+    return objectAssign(theme2[attr], theme1[attr]);
   }
 
   /**

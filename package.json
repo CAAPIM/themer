@@ -9,6 +9,7 @@
     "lint": "eslint ./src/ --ext .js",
     "test": "mocha --reporter nyan --require babel-register ./tests/**/**/*.js",
     "test:coverage": "babel-node ./node_modules/.bin/isparta cover --include './src/**/**/*.js' _mocha -- --reporter nyan './tests/**/*.spec.js'",
+    "codecov": "codecov",
     "commit": "git-cz",
     "prebuild": "rimraf ./lib",
     "build": "babel --out-dir ./lib --ignore *.spec.js, ./src",

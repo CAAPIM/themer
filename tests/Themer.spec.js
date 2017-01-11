@@ -4,11 +4,15 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-import { expect } from 'chai';
+import chai from 'chai';
+import dirtyChai from 'dirty-chai';
 import sinon from 'sinon';
-import themer, { create, themer as themerInstance } from '../src';
+import themerDecorator, { create, themer as themerInstance } from '../src';
 import Themer from '../src/Themer';
-import Theme from '../src/theme';
+
+// use dirty chai to avoid unused expressions
+chai.use(dirtyChai);
+const expect = chai.expect;
 
 let testInstance = null;
 
@@ -16,34 +20,31 @@ const testTheme = {
   styles: {
     header: 'big-text-class',
   },
-  variables: () => {
-    return {
-      color: 'red',
-    };
-  },
+  variables: () => ({
+    color: 'red',
+  }),
 };
 
-const snippet = (props) => {
-  return `<h1 class="${props.styles.header}">${props.content}</h1>`;
-};
+const snippet = (props) =>
+  `<h1 class="${props.styles.header}">${props.content}</h1>`;
 
 describe('Themer', () => {
   describe('exports', () => {
     describe('default', () => {
       it('should export the result of Themer.render()', () => {
-        const result = themer(snippet, testTheme)({ content: 'Hello' });
-        expect(result).to.equal(`<h1 class="big-text-class">Hello</h1>`);
+        const result = themerDecorator(snippet, testTheme)({ content: 'Hello' });
+        expect(result).to.equal('<h1 class="big-text-class">Hello</h1>');
       });
 
       it('should give access to the default instance of themer', () => {
-        expect(themerInstance instanceof Themer).to.be.true;
+        expect(themerInstance instanceof Themer).to.be.true();
       });
     });
 
     describe('create', () => {
       it('should export create function that creates a new Themer instance', () => {
         expect(create).to.be.a('function');
-        expect(create() instanceof Themer).to.be.true;
+        expect(create() instanceof Themer).to.be.true();
       });
 
       it('should allow for the creation of multiple Themer instances', () => {
@@ -125,12 +126,8 @@ describe('Themer', () => {
 
     it('should accept theme.styles and theme.variables as functions', () => {
       const testFunctionTheme = {
-        styles: () => {
-          return { test: 'test' };
-        },
-        variables: () => {
-          return { color: 'red' };
-        },
+        styles: () => ({ test: 'test' }),
+        variables: () => ({ color: 'red' }),
       };
 
       testInstance = create({ themes: [testFunctionTheme] });
@@ -143,18 +140,14 @@ describe('Themer', () => {
       const resolvedAttrs = testInstance.resolveAttributes(snippet, [testTheme]);
 
       expect(resolvedAttrs).to.be.a('object');
-      expect(resolvedAttrs.theme).to.deep.exist;
-      expect(resolvedAttrs.snippet).to.deep.exist;
+      expect(resolvedAttrs.theme).to.deep.exist();
+      expect(resolvedAttrs.snippet).to.deep.exist();
     });
   });
 
   it('should accept theme.styles as a function', () => {
     const testFuncTheme = {
-      styles: () => {
-        return {
-          color: 'red',
-        };
-      },
+      styles: () => ({ color: 'red' }),
     };
 
     testInstance = create({ themes: [testFuncTheme] });
@@ -168,23 +161,17 @@ describe('Themer', () => {
       testInstance = create({ themes: [testTheme] });
       const renderedSnippet = testInstance.render(snippet, { content: 'Hello' });
 
-      expect(renderedSnippet).to.equal(`<h1 class="big-text-class">Hello</h1>`);
+      expect(renderedSnippet).to.equal('<h1 class="big-text-class">Hello</h1>');
     });
 
     it('should run the middleware functions before render', () => {
-      const spy1 = sinon.spy((component, resolvedTheme) => {
-        return component;
-      });
-
-      const spy2 = sinon.spy((component, resolvedTheme) => {
-        return component;
-      });
-
+      const spy1 = sinon.spy((component) => component);
+      const spy2 = sinon.spy((component) => component);
       testInstance = create({ themes: [testTheme], middleware: [spy1, spy2] });
-      const renderedSnippet = testInstance.render(snippet);
+      testInstance.render(snippet);
 
-      expect(spy1.calledOnce).to.be.true;
-      expect(spy2.calledOnce).to.be.true;
+      expect(spy1.calledOnce).to.be.true();
+      expect(spy2.calledOnce).to.be.true();
     });
   });
 });

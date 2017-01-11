@@ -1,2 +1,6 @@
-lib/*
+.github/*
 node_modules/*
+coverage/*
+flow-coverage/*
+flow-typed/*
+lib/*

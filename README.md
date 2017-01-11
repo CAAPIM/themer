@@ -22,13 +22,13 @@ This library is meant to be used in all CA components.
 ## Installation
 
 ```js
-npm install @ca/themer --save
+npm install @caapim/themer --save
 ```
 
 ## Usage with CSS Modules
 
 ```js
-import themer from '@ca/themer';
+import themer from '@caapim/themer';
 import theme from './styles.css'; // CSS Modules
 
 const headerHtmlSnippet = (props) => {

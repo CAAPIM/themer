@@ -6,7 +6,7 @@
   "description": "Framework agnostic utility to make generic JavaScript components themeable and extensible.",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "eslint ./src/ --ext .js",
+    "lint": "eslint .",
     "test": "mocha --reporter nyan --require babel-register ./tests/**/**/*.js",
     "test:coverage": "babel-node ./node_modules/.bin/isparta cover --include './src/**/**/*.js' _mocha -- --reporter nyan './tests/**/*.spec.js'",
     "codecov": "codecov",
@@ -31,6 +31,7 @@
     "codecov": "^1.0.1",
     "commitizen": "^2.9.5",
     "cz-conventional-changelog": "^1.2.0",
+    "dirty-chai": "^1.2.2",
     "eslint": "^3.13.1",
     "eslint-config-ca": "^1.0.2",
     "eslint-plugin-jsx-a11y": "^2.2.3",

@@ -20,7 +20,7 @@
     "test"
   ],
   "dependencies": {
-    "lodash": "^4.17.2",
+    "lodash": "^4.17.4",
     "object-assign": "^4.1.0",
     "uuid": "^3.0.1"
   },
@@ -31,19 +31,19 @@
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
     "codecov": "^1.0.1",
-    "commitizen": "^2.8.6",
+    "commitizen": "^2.9.5",
     "cz-conventional-changelog": "^1.2.0",
-    "eslint": "^3.12.0",
+    "eslint": "^3.13.1",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-config-ca": "git+ssh://git@github.com:CAAPIM/eslint-config-ca.git",
     "isparta": "^4.0.0",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^3.2.0",
-    "pre-commit": "^1.2.1",
+    "pre-commit": "^1.2.2",
     "semantic-release": "^6.3.2",
-    "sinon": "^1.17.6",
+    "sinon": "^1.17.7",
     "validate-commit-msg": "^2.8.2",
-    "husky": "^0.11.9"
+    "husky": "^0.12.0"
   },
   "keywords": [
     "JS",

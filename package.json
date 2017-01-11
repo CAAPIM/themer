@@ -1,5 +1,5 @@
 {
-  "name": "themer",
+  "name": "@ca/themer",
   "version": "1.0.0",
   "license": "MIT",
   "author": "CA Technologies",
@@ -15,10 +15,6 @@
     "commitmsg": "validate-commit-msg",
     "precommit": "npm run lint && npm run test"
   },
-  "pre-commit": [
-    "lint",
-    "test"
-  ],
   "dependencies": {
     "lodash": "^4.17.2",
     "object-assign": "^4.1.0",
@@ -27,7 +23,7 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-eslint": "^7.1.1",
-    "babel-preset-ca": "git+ssh://git@github.com:CAAPIM/babel-preset-ca.git",
+    "babel-preset-ca": "^1.0.0",
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
     "codecov": "^1.0.1",
@@ -35,11 +31,10 @@
     "cz-conventional-changelog": "^1.2.0",
     "eslint": "^3.12.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-config-ca": "git+ssh://git@github.com:CAAPIM/eslint-config-ca.git",
+    "eslint-config-ca": "^1.0.0",
     "isparta": "^4.0.0",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^3.2.0",
-    "pre-commit": "^1.2.1",
     "semantic-release": "^6.3.2",
     "sinon": "^1.17.6",
     "validate-commit-msg": "^2.8.2",

@@ -22,13 +22,13 @@ This library is meant to be used in all CA components.
 ## Installation
 
 ```js
-npm install themer --save
+npm install @ca/themer --save
 ```
 
 ## Usage with CSS Modules
 
 ```js
-import themer from 'themer';
+import themer from '@ca/themer';
 import theme from './styles.css'; // CSS Modules
 
 const headerHtmlSnippet = (props) => {
@@ -57,7 +57,7 @@ export default themer(headerHtmlSnippet, theme);
 |`release`|Uses [semantic-release](https://github.com/semantic-release/semantic-release) to trigger releases.|
 
 ## How Can You Contribute
-Your contributions are welcome and much appreciated. To learn more, see the [Contribution Guidelines](https://github.com/CAAPIM/react-themer/blob/master/CONTRIBUTING.md).
+Your contributions are welcome and much appreciated. To learn more, see the [Contribution Guidelines](CONTRIBUTING.md).
 
 This project supports `commitizen`. You can use `npm run commit` to run the local instance of `commitizen` or `git cz` if you have it installed globally.
 
@@ -66,5 +66,5 @@ Alternatively, if you are simply using `git commit`, you must follow this format
 
 ## License
 Copyright (c) 2017 CA. All rights reserved.
-This software may be modified and distributed under the terms of the MIT license. To learn more, see the [License](https://github.com/CAAPIM/react-themer/blob/master/LICENSE.md)
+This software may be modified and distributed under the terms of the MIT license. To learn more, see the [License](LICENSE.md)
 

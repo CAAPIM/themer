@@ -1,6 +1,6 @@
 {
   "name": "@caapim/themer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "author": "CA Technologies",
   "description": "Framework agnostic utility to make generic JavaScript components themeable and extensible.",

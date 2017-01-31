@@ -18,15 +18,21 @@ let testInstance = null;
 
 const testTheme = {
   styles: {
-    header: 'big-text-class',
+    root: 'big-text-class',
+    stop: 'red-black-class',
+    go: 'green-grass-class',
   },
   variables: () => ({
     color: 'red',
   }),
+  variants: {
+    stop: false,
+    go: false,
+  },
 };
 
 const snippet = (props) =>
-  `<h1 class="${props.styles.header}">${props.content}</h1>`;
+  `<h1 class="${props.styles.root}">${props.content}</h1>`;
 
 describe('Themer', () => {
   describe('exports', () => {
@@ -87,12 +93,13 @@ describe('Themer', () => {
       expect(testInstance.setTheme).to.be.a('function');
     });
 
-    it('should provide a getter methods for theme id, variables and styles', () => {
+    it('should provide a getter methods for theme id, variables, variants, and styles', () => {
       testInstance = create({ themes: [testTheme] });
 
       expect(testInstance.getThemeId).to.be.a('function');
       expect(testInstance.getThemeStyles).to.be.a('function');
       expect(testInstance.getThemeVariables).to.be.a('function');
+      expect(testInstance.getVariants).to.be.a('function');
     });
 
     it('accepts a non keyed array of theme attributes and adds styles key', () => {
@@ -102,6 +109,7 @@ describe('Themer', () => {
       expect(testInstance.getThemeId).to.be.a('function');
       expect(testInstance.getThemeStyles).to.be.a('function');
       expect(testInstance.getThemeVariables()).to.deep.equal({});
+      expect(testInstance.getVariants()).to.deep.equal({});
     });
 
     it('will use theme1.styles if theme2.styles does not exist', () => {
@@ -114,6 +122,13 @@ describe('Themer', () => {
     it('should throw an error if theme is not an object or function', () => {
       testInstance = create();
       expect(() => testInstance.setTheme([1])).to.throw();
+    });
+
+    it('should return an object of variants if supplied', () => {
+      testInstance = create({ themes: [testTheme] });
+      const variantObj = testInstance.getVariants();
+      const expectedResult = { stop: false, go: false };
+      expect(variantObj).to.deep.equal(expectedResult);
     });
 
     it('should generated a new theme object when using .setTheme() on an existing Themer', () => {
@@ -132,7 +147,7 @@ describe('Themer', () => {
 
       testInstance = create({ themes: [testFunctionTheme] });
       const renderedSnippet = testInstance.render(snippet, { content: 'Hello' });
-      expect(renderedSnippet).to.equal(`<h1 class="${testFunctionTheme.styles().header}">Hello</h1>`);
+      expect(renderedSnippet).to.equal(`<h1 class="${testFunctionTheme.styles().root}">Hello</h1>`);
     });
 
     it('should return the resolved snippet and theme attributes', () => {
@@ -162,6 +177,13 @@ describe('Themer', () => {
       const renderedSnippet = testInstance.render(snippet, { content: 'Hello' });
 
       expect(renderedSnippet).to.equal('<h1 class="big-text-class">Hello</h1>');
+    });
+
+    it('should provide the rendered HTML snippet with styles resolved and mapped with variant support', () => {
+      testInstance = create({ themes: [testTheme] });
+      const renderedSnippet = testInstance.render(snippet, { content: 'Hello', stop: true, go: true });
+
+      expect(renderedSnippet).to.equal('<h1 class="big-text-class red-black-class green-grass-class">Hello</h1>');
     });
 
     it('should run the middleware functions before render', () => {

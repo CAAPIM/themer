@@ -5,6 +5,7 @@
  */
 
 import uuid from 'uuid';
+import { variantApply } from './utils';
 import Middleware from './middleware';
 import Theme from './theme';
 
@@ -43,6 +44,15 @@ export default class Themer {
   }
 
   /**
+   * Return all registered variants
+   *
+   * @return {Object} Collections of middleware functions
+   */
+  getVariants() {
+    return this.theme.getVariants();
+  }
+
+  /**
    * Return the current themes unique ID
    *
    * @return {uuid}
@@ -56,7 +66,7 @@ export default class Themer {
    * The flattened object will give priority to local variable definitions if they conflict
    * with global vars.
    *
-   * @param  {Object} variables Variables defined by the gloval application theme
+   * @param  {Object} variables Variables defined by the global application theme
    * @return {Object}           Resolved theme variables, where local vars take priority
    */
   getThemeVariables(variables = {}) {
@@ -86,7 +96,7 @@ export default class Themer {
 
   /**
    * Executes all of the methods in the middleware registry. Middleware methods
-   * expect the snippet and them.styles to be passed in as properties
+   * expect the snippet and theme.styles to be passed in as properties
    *
    * @param  {Function} snippet Function that returns valid HTML markup
    * @return {Function}         Resolved results of all middleware methods
@@ -107,7 +117,6 @@ export default class Themer {
     const variables = theme.getVariables();
     const styles = theme.getStyles(variables);
     const resolvedSnippet = this.middleware.resolve(snippet, styles);
-
     return {
       snippet: resolvedSnippet,
       theme: {
@@ -125,9 +134,10 @@ export default class Themer {
    * @return {Object}           The rendered HTML with appended styles
    */
   render(snippet, props = {}) {
-    return this.resolveMiddleware(snippet)(Object.assign(props, {
-      styles: this.theme.getStyles(),
+    const styles = variantApply(props, this.theme);
+    const resolvedSnippet = this.resolveMiddleware(snippet)(Object.assign(props, {
+      styles,
     }));
+    return resolvedSnippet;
   }
-
 }

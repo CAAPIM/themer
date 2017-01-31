@@ -4,7 +4,7 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-import { isFunction, isArray, find } from 'lodash';
+import { each, find, isArray, isFunction } from 'lodash';
 import Themer from './../Themer';
 
 /**
@@ -52,4 +52,24 @@ export function resolve(arrayToResolve, ...args) {
 
     return val;
   }, {});
+}
+
+/**
+ * Append variants passed as "true" props to the root style element
+ *
+ * @param {Object} props             The props passed to the render method
+ * @param {Object} theme             The theme as calculated
+ * @return {Object}                  The styles as per post-variant processing
+ * @public
+ */
+export function variantApply(props, theme) {
+  const styles = theme.getStyles();
+  each(props, (propValue, propKey) => {
+    each(theme.getVariants(), (variantValue, variantKey) => {
+      if (propKey === variantKey && propValue === true) {
+        styles.root += ` ${styles[variantKey]}`;
+      }
+    });
+  });
+  return styles;
 }

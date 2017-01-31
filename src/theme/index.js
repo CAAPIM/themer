@@ -121,6 +121,7 @@ export default class Theme {
       .reduce((previousTheme, currentTheme) => ({
         styles: Theme.combineByAttributes('styles', previousTheme, currentTheme),
         variables: Theme.combineByAttributes('variables', previousTheme, currentTheme),
+        variants: Theme.combineByAttributes('variants', previousTheme, currentTheme),
       }), {});
 
     resolvedTheme.id = uuid();
@@ -165,6 +166,15 @@ export default class Theme {
     }
 
     return this.theme.styles;
+  }
+
+  /**
+   * Returns a flattened variant object based on the raw theme and vars that were passed in
+   *
+   * @return {Object}           Resolved variants object
+   */
+  getVariants() {
+    return this.theme.variants;
   }
 
 }

@@ -39,7 +39,7 @@ export default class Middleware {
 
   /**
    * Executes all of the methods in the middleware registry. Middleware methods
-   * expect the snippet and them.styles to be passed in as properties
+   * expect the snippet and theme.styles to be passed in as properties
    *
    * @param  {Function} snippet Function that returns valid HTML markup
    * @param  {Object}   styles  Executes all middleware function on snippet

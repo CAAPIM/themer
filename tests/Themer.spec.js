@@ -158,6 +158,30 @@ describe('Themer', () => {
       expect(resolvedAttrs.theme).to.deep.exist();
       expect(resolvedAttrs.snippet).to.deep.exist();
     });
+
+    it('should use global variables when resolving theme variables and styles', () => {
+      const testFunctionTheme = {
+        styles: (_, vars) => ({ test: { color: vars.color } }),
+        variables: (_, globalVars) => ({ color: globalVars.color || 'red' }),
+      };
+
+      const globalTheme = {
+        variables: {
+          color: 'blue',
+        },
+      };
+
+      testInstance = create();
+      const resolvedAttrs = testInstance.resolveAttributes(
+        snippet, [testFunctionTheme], globalTheme.variables);
+
+      expect(resolvedAttrs).to.be.a('object');
+      expect(resolvedAttrs.theme).to.deep.exist();
+      expect(resolvedAttrs.snippet).to.deep.exist();
+      expect(resolvedAttrs.theme.styles).to.deep.equal(
+        testFunctionTheme.styles(null, globalTheme.variables)
+      );
+    });
   });
 
   it('should accept theme.styles as a function', () => {

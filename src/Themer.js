@@ -110,11 +110,12 @@ export default class Themer {
    *
    * @param  {Function} snippet Function that returns valid HTML markup
    * @param  {array} themes  Array of themes
+   * @param  {object} globalVars  global variables to use when resolving theme variables
    * @return {Object}         Resolved theme and snippet attrs
    */
-  resolveAttributes(snippet, themes) {
+  resolveAttributes(snippet, themes, globalVars) {
     const theme = new Theme(themes);
-    const variables = theme.getVariables();
+    const variables = theme.getVariables(globalVars);
     const styles = theme.getStyles(variables);
     const resolvedSnippet = this.middleware.resolve(snippet, styles);
     return {

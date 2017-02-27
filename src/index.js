@@ -5,14 +5,10 @@
  */
 
 import { createThemer as create } from './utils';
+import { createDecorator } from './decorator';
 
 const themer = create();
 
-export { themer, create };
+export { themer, create, createDecorator };
 
-export default (component, rawTheme) => {
-  themer.setTheme([rawTheme]);
-
-  return (props) => themer.render(component, props);
-};
-
+export default createDecorator(themer);

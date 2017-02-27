@@ -5,9 +5,11 @@
  */
 
 import uuid from 'uuid';
-import objectAssign from 'object-assign';
 import { isObject, isFunction } from 'lodash';
-import { arrayHasFunction, resolve } from './../utils';
+import {
+  resolveValue,
+  combineByAttributes,
+} from './../utils';
 
 export default class Theme {
 
@@ -28,7 +30,7 @@ export default class Theme {
    */
   setup(themes) {
     if (themes && themes.length) {
-      this.theme = this.combine(themes);
+      this.theme = Theme.combine(themes);
     }
 
     return this;
@@ -57,32 +59,6 @@ export default class Theme {
     return true;
   }
 
-  /**
-   * Accepts two theme objects and an attribute they should have in common.
-   * If both objects contain the attribute, move the attribute value from
-   * both themes into a single array.
-   *
-   * @param  {String} attr   The attribute theme1 and theme2 should both contain
-   * @param  {Object} theme1 The first theme object
-   * @param  {Object} theme2 The second theme object
-   * @return {Array}         Array containing both attribute value from both themes
-   * @public
-   */
-  static combineByAttributes(attr, theme1 = {}, theme2 = {}) {
-    if (!theme1[attr] && !theme2[attr]) {
-      return {};
-    }
-
-    if (theme1[attr] && !theme2[attr]) {
-      return theme1[attr];
-    }
-
-    if (!theme1[attr] && theme2[attr]) {
-      return theme2[attr];
-    }
-
-    return objectAssign(theme2[attr], theme1[attr]);
-  }
 
   /**
    * Validates and parses a theme object and extracts
@@ -112,16 +88,20 @@ export default class Theme {
    * @param  {Array} themes Array of theme objects
    * @return {Array}        Array of combined and formatted theme objects
    */
-  combine(themes = []) {
+  static combine(themes) {
+    if (!themes || !themes.length) {
+      return {};
+    }
+
     const truthy = val => val;
 
     const resolvedTheme = themes
       .map(Theme.parse)
       .filter(truthy)
       .reduce((previousTheme, currentTheme) => ({
-        styles: Theme.combineByAttributes('styles', previousTheme, currentTheme),
-        variables: Theme.combineByAttributes('variables', previousTheme, currentTheme),
-        variants: Theme.combineByAttributes('variants', previousTheme, currentTheme),
+        styles: combineByAttributes('styles', previousTheme, currentTheme),
+        variables: combineByAttributes('variables', previousTheme, currentTheme),
+        variants: combineByAttributes('variants', previousTheme, currentTheme),
       }), {});
 
     resolvedTheme.id = uuid();
@@ -138,43 +118,14 @@ export default class Theme {
     return this.theme.id;
   }
 
-  /**
-   * Returns a flattened variables object based on the global and local variables passed in.
-   * The flattened object will give priority to local variable definitions if they conflict
-   * with global vars.
-   *
-   * @param  {Object} variables Variables defined by the gloval application theme
-   * @return {Object}           Resolved theme variables, where local vars take priority
-   */
-  getVariables(variables = {}) {
-    if (isFunction(this.theme.variables) || arrayHasFunction(this.theme.variables)) {
-      return resolve(this.theme.variables, variables);
-    }
-
-    return this.theme.variables;
+  resolve(globalVars) {
+    const variables = resolveValue(this.theme.variables, globalVars);
+    const styles = resolveValue(this.theme.styles, variables);
+    const variants = resolveValue(this.theme.variants);
+    return {
+      variables,
+      styles,
+      variants,
+    };
   }
-
-  /**
-   * Returns a flattened styles object based on the raw theme and vars that were passed in
-   *
-   * @param  {Object} variables The resolved local theme variables
-   * @return {Object}           Resolved styles object
-   */
-  getStyles(variables = {}) {
-    if (isFunction(this.theme.styles) || arrayHasFunction(this.theme.styles)) {
-      return resolve(this.theme.styles, variables);
-    }
-
-    return this.theme.styles;
-  }
-
-  /**
-   * Returns a flattened variant object based on the raw theme and vars that were passed in
-   *
-   * @return {Object}           Resolved variants object
-   */
-  getVariants() {
-    return this.theme.variants;
-  }
-
 }

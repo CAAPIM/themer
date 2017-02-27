@@ -9,8 +9,9 @@
     "lint": "eslint .",
     "flow": "flow check",
     "flow:coverage": "flow-coverage-report -i './src/**/*.js' -t html -t text",
-    "test": "mocha --reporter nyan --require babel-register ./tests/**/**/*.js",
-    "test:coverage": "babel-node ./node_modules/.bin/isparta cover --include './src/**/**/*.js' _mocha -- --reporter nyan './tests/**/*.spec.js'",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "codecov": "codecov",
     "commit": "git-cz",
     "prebuild": "rimraf ./lib",
@@ -29,23 +30,18 @@
     "babel-eslint": "^7.1.1",
     "babel-preset-ca": "^1.0.2",
     "babel-register": "^6.18.0",
-    "chai": "^3.5.0",
     "codecov": "^1.0.1",
     "commitizen": "^2.9.5",
     "cz-conventional-changelog": "^1.2.0",
-    "dirty-chai": "^1.2.2",
     "eslint": "^3.13.1",
     "eslint-config-ca": "^1.0.2",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "flow-bin": "^0.37.4",
     "flow-coverage-report": "^0.2.0",
     "husky": "^0.12.0",
-    "isparta": "^4.0.0",
-    "istanbul": "^1.1.0-alpha.1",
-    "mocha": "^3.2.0",
+    "jest": "^19.0.2",
     "rimraf": "^2.5.4",
     "semantic-release": "^6.3.2",
-    "sinon": "^1.17.7",
     "validate-commit-msg": "^2.8.2"
   },
   "keywords": [
@@ -60,6 +56,11 @@
     "validate-commit-msg": {
       "types": "conventional-commit-types"
     }
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ]
   },
   "repository": {
     "type": "git",

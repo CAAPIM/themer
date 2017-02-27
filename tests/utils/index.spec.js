@@ -13,6 +13,7 @@ import {
   applyVariantsProps,
   mapThemeProps,
 } from '../../src/utils';
+import { snippet } from '../fixtures';
 
 describe('utils', () => {
   describe('createThemer', () => {
@@ -30,6 +31,12 @@ describe('utils', () => {
   describe('resolveArray', () => {
     it('should be a funciton', () => {
       expect(typeof resolveArray).toBe('function');
+    });
+    it('should resolve to item if not a function', () => {
+      expect(resolveArray('test-item-to-resolve')).toBe('test-item-to-resolve');
+    });
+    it('should skip item in array if falsy', () => {
+      expect(resolveArray(['test', null, (val) => `${val}-item`])).toBe('test-item');
     });
   });
 
@@ -50,11 +57,67 @@ describe('utils', () => {
     it('should be a funciton', () => {
       expect(typeof applyVariantsProps).toBe('function');
     });
+    it('should map simple variants to root class', () => {
+      const testResolvedTheme = { styles: { root: 'root-class-123', test: 'test-123' }, variants: { test: true } };
+      const testProps = { content: 'Hello', test: true };
+      const mappedProps = {
+        content: 'Hello',
+        theme: { styles: { root: 'root-class-123 test-123', test: 'test-123' }, variants: { test: true } },
+      };
+      expect(applyVariantsProps(testProps, testResolvedTheme)).toEqual(mappedProps);
+    });
+    it('should not map variants if class does not exist', () => {
+      const testResolvedTheme = { styles: { root: 'root-class-123' }, variants: { test: true } };
+      const testProps = { content: 'Hello', test: true };
+      const mappedProps = {
+        content: 'Hello',
+        theme: { styles: { root: 'root-class-123' }, variants: {} },
+      };
+      expect(applyVariantsProps(testProps, testResolvedTheme)).toEqual(mappedProps);
+    });
+    it('should map complex variants to root class', () => {
+      const testResolvedTheme = {
+        styles: { root: 'root-class-123', test: 'test-123' },
+        variants: {
+          test: { prop1: 'prop1Value', prop2: true },
+        },
+      };
+      const testProps = { content: 'Hello', prop1: 'prop1Value', prop2: true };
+      const mappedProps = {
+        content: 'Hello',
+        theme: { styles: { root: 'root-class-123 test-123', test: 'test-123' }, variants: { test: true } },
+      };
+      expect(applyVariantsProps(testProps, testResolvedTheme)).toEqual(mappedProps);
+    });
+    it('should not map complex variants if not all prop-checks pass', () => {
+      const testResolvedTheme = {
+        styles: { root: 'root-class-123', test: 'test-123' },
+        variants: {
+          test: { prop1: 'prop1Value', prop2: true },
+        },
+      };
+      const testProps = { content: 'Hello', prop1: 'prop1Value' };
+      const mappedProps = {
+        content: 'Hello',
+        theme: { styles: { root: 'root-class-123', test: 'test-123' }, variants: {} },
+      };
+      expect(applyVariantsProps(testProps, testResolvedTheme)).toEqual(mappedProps);
+    });
   });
 
   describe('mapThemeProps', () => {
     it('should be a funciton', () => {
       expect(typeof mapThemeProps).toBe('function');
+    });
+    it('should map theme prop', () => {
+      const testResolvedTheme = { styles: { root: 'root-class-123' } };
+      const mappedSnippet = mapThemeProps(snippet, testResolvedTheme);
+      expect(mappedSnippet({ content: 'Hello' })).toBe('<h1 class="root-class-123">Hello</h1>');
+    });
+    it('should map variants props, if defined', () => {
+      const testResolvedTheme = { styles: { root: 'root-class-123', test: 'test-123' }, variants: { test: true } };
+      const mappedSnippet = mapThemeProps(snippet, testResolvedTheme);
+      expect(mappedSnippet({ content: 'Hello', test: true })).toBe('<h1 class="root-class-123 test-123">Hello</h1>');
     });
   });
 });

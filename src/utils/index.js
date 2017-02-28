@@ -98,7 +98,15 @@ export function combineByAttributes(attr, obj1 = {}, obj2 = {}) {
     return obj2[attr];
   }
 
-  return objectAssign(obj2[attr], obj1[attr]);
+  if (isPlainObject(obj1[attr]) && isPlainObject(obj2[attr])) {
+    return objectAssign(obj1[attr], obj2[attr]);
+  }
+
+  if (Array.isArray(obj1[attr])) {
+    return obj1[attr].concat(obj2[attr]);
+  }
+
+  return [obj1[attr], obj2[attr]];
 }
 
 /**

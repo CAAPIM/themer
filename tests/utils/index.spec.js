@@ -34,8 +34,28 @@ describe('utils', () => {
     it('should resolve to item if not a function', () => {
       expect(resolveArray('test-item-to-resolve')).toBe('test-item-to-resolve');
     });
+    it('should pass content of first item into second item, if second item is a function', () => {
+      const testArray = [
+        'test',
+        (val) => `${val}-item`,
+      ];
+      expect(resolveArray(testArray)).toBe('test-item');
+    });
+    it('should pass retune value of function to next funciton', () => {
+      const testArray = [
+        'test',
+        (val) => `${val}-item`,
+        (val) => `${val}-test`,
+      ];
+      expect(resolveArray(testArray)).toBe('test-item-test');
+    });
     it('should skip item in array if falsy', () => {
-      expect(resolveArray(['test', null, (val) => `${val}-item`])).toBe('test-item');
+      const testArray = [
+        'test',
+        null,
+        (val) => `${val}-item`,
+      ];
+      expect(resolveArray(testArray)).toBe('test-item');
     });
   });
 
@@ -49,6 +69,37 @@ describe('utils', () => {
     it('should return an empty object if no argument is passed', () => {
       const combinedObj = combineByAttributes();
       expect(combinedObj).toEqual({});
+    });
+    it('should return merged object if both elements are plain objects', () => {
+      const testObj1 = { testAttr: { test: 1 } };
+      const testObj2 = { testAttr: { prop: 2 } };
+      expect(combineByAttributes('testAttr', testObj1, testObj2)).toEqual({
+        test: 1,
+        prop: 2,
+      });
+    });
+    it('should merge objects with priority to second object', () => {
+      const testObj1 = { testAttr: { test: 1 } };
+      const testObj2 = { testAttr: { test: 2 } };
+      expect(combineByAttributes('testAttr', testObj1, testObj2)).toEqual({
+        test: 2,
+      });
+    });
+    it('should return array if any of the attributes are not plain objects', () => {
+      const testObj1 = { testAttr: 'test' };
+      const testObj2 = { testAttr: { test: 2 } };
+      expect(combineByAttributes('testAttr', testObj1, testObj2)).toEqual([
+        'test',
+        { test: 2 },
+      ]);
+    });
+    it('should add item to array if first object attr is array', () => {
+      const testObj1 = { testAttr: ['test'] };
+      const testObj2 = { testAttr: { test: 2 } };
+      expect(combineByAttributes('testAttr', testObj1, testObj2)).toEqual([
+        'test',
+        { test: 2 },
+      ]);
     });
   });
 

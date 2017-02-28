@@ -4,11 +4,21 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-import { createThemer as create, mapThemeProps } from './utils';
+import {
+  createThemer as create,
+  mapThemeProps,
+  applyVariantsProps,
+} from './utils';
 import { createDecorator } from './decorator';
 
 const themer = create();
 
-export { themer, create, createDecorator, mapThemeProps };
+export {
+  themer,
+  create,
+  createDecorator,
+  mapThemeProps,
+  applyVariantsProps,
+};
 
 export default createDecorator(themer);

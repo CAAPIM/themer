@@ -13,6 +13,6 @@ export function createDecorator(customThemer) {
   const themerInstance = customThemer || themer;
   return rawTheme => inputSnippet => {
     const { snippet, theme } = themerInstance.resolveAttributes(inputSnippet, [rawTheme]);
-    return mapThemeProps(snippet, theme);
+    return (props) => snippet(mapThemeProps(props, theme));
   };
 }

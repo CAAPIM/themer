@@ -13,7 +13,6 @@ import {
   applyVariantsProps,
   mapThemeProps,
 } from '../../src/utils';
-import { snippet } from '../fixtures';
 
 describe('utils', () => {
   describe('createThemer', () => {
@@ -109,15 +108,22 @@ describe('utils', () => {
     it('should be a funciton', () => {
       expect(typeof mapThemeProps).toBe('function');
     });
+
     it('should map theme prop', () => {
       const testResolvedTheme = { styles: { root: 'root-class-123' } };
-      const mappedSnippet = mapThemeProps(snippet, testResolvedTheme);
-      expect(mappedSnippet({ content: 'Hello' })).toBe('<h1 class="root-class-123">Hello</h1>');
+      const testProps = { content: 'Hello' };
+      const mappedProps = mapThemeProps(testProps, testResolvedTheme);
+      expect(mappedProps).toEqual({ ...testProps, theme: testResolvedTheme });
     });
+
     it('should map variants props, if defined', () => {
       const testResolvedTheme = { styles: { root: 'root-class-123', test: 'test-123' }, variants: { test: true } };
-      const mappedSnippet = mapThemeProps(snippet, testResolvedTheme);
-      expect(mappedSnippet({ content: 'Hello', test: true })).toBe('<h1 class="root-class-123 test-123">Hello</h1>');
+      const testProps = { content: 'Hello', test: true };
+      const mappedProps = mapThemeProps(testProps, testResolvedTheme);
+      expect(mappedProps).toEqual({
+        content: 'Hello',
+        theme: { styles: { root: 'root-class-123 test-123', test: 'test-123' }, variants: { test: true } },
+      });
     });
   });
 });

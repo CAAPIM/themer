@@ -148,12 +148,10 @@ export function applyVariantsProps(props, resolvedTheme) {
   return { ...mappedProps, theme: mappedTheme };
 }
 
-export function mapThemeProps(snippet, resolvedTheme) {
-  return (props) => {
-    if (resolvedTheme.variants && resolvedTheme.styles) {
-      const variantsProps = applyVariantsProps(props, resolvedTheme);
-      return snippet(variantsProps);
-    }
-    return snippet({ ...props, theme: resolvedTheme });
-  };
+export function mapThemeProps(props, resolvedTheme) {
+  if (resolvedTheme.variants && resolvedTheme.styles) {
+    const variantsProps = applyVariantsProps(props, resolvedTheme);
+    return variantsProps;
+  }
+  return { ...props, theme: resolvedTheme };
 }

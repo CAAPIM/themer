@@ -67,4 +67,3 @@ Alternatively, if you are simply using `git commit`, you must follow this format
 ## License
 Copyright (c) 2017 CA. All rights reserved.
 This software may be modified and distributed under the terms of the MIT license. To learn more, see the [License](LICENSE.md)
-

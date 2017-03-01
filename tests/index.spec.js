@@ -4,7 +4,12 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-import themerDecorator, { create, themer as themerInstance, mapThemeProps } from '../src';
+import themerDecorator, {
+  create,
+  themer as themerInstance,
+  mapThemeProps,
+  applyVariantsProps,
+} from '../src';
 import Themer from '../src/Themer';
 import { testThemeSimple, snippet } from './fixtures';
 
@@ -43,6 +48,12 @@ describe('exports', () => {
   describe('mapThemeProps', () => {
     it('should export mapThemeProps function that correctly maps resolved theme to snippet props', () => {
       expect(typeof mapThemeProps).toBe('function');
+    });
+  });
+
+  describe('applyVariantsProps', () => {
+    it('should export applyVariantsProps function that correctly maps variants to props', () => {
+      expect(typeof applyVariantsProps).toBe('function');
     });
   });
 });

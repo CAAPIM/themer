@@ -4,6 +4,7 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
+import { create, mapThemeProps } from '../../src';
 import { createDecorator } from '../../src/decorator';
 import {
   testThemeSimple,
@@ -34,5 +35,21 @@ describe('decorator', () => {
     const decoratedSnippet = themerDecorator(testThemeVariants)(snippet);
     const testProps = { content: 'Hello', stop: true, go: true };
     expect(decoratedSnippet(testProps)).toBe('<h1 class="big-text-class red-black-class green-grass-class">Hello</h1>');
+  });
+
+  it('should should apply variants after middlewares are resolved', () => {
+    const testTheme = { styles: { root: 'root-123', test: 'test-123' } };
+    const customThemer = create();
+
+    const testMiddleware = (middlewareSnippet, middlewareTheme) => {
+      const mappedTheme = { ...middlewareTheme, variants: { test: true } };
+      return (props) => middlewareSnippet(mapThemeProps(props, mappedTheme));
+    };
+
+    customThemer.setMiddleware(testMiddleware);
+    const customThemerDecorator = createDecorator(customThemer);
+    const decoratedSnippet = customThemerDecorator(testTheme)(snippet);
+    const testProps = { content: 'Hello', test: true };
+    expect(decoratedSnippet(testProps)).toBe('<h1 class="root-123 test-123">Hello</h1>');
   });
 });

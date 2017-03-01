@@ -98,24 +98,35 @@ export function combineByAttributes(attr, obj1 = {}, obj2 = {}) {
     return obj2[attr];
   }
 
-  return objectAssign(obj2[attr], obj1[attr]);
+  if (isPlainObject(obj1[attr]) && isPlainObject(obj2[attr])) {
+    return objectAssign(obj1[attr], obj2[attr]);
+  }
+
+  if (Array.isArray(obj1[attr])) {
+    return obj1[attr].concat(obj2[attr]);
+  }
+
+  return [obj1[attr], obj2[attr]];
 }
 
 /**
  * Append variants passed as "true" props to the root style element
  *
- * @param {Object} props             The props passed to the render method
- * @param {Object} theme             The theme as calculated
- * @return {Object}                  The styles as per post-variant processing
+ * @param {Object} props The props passed to the render method
+ * @return {Object}      The styles as per post-variant processing
  * @public
  */
-export function applyVariantsProps(props, resolvedTheme) {
-  const variants = resolvedTheme.variants;
+export function applyVariantsProps(props) {
+  const resolvedTheme = props.theme;
+  if (!resolvedTheme || !resolvedTheme.variants || !resolvedTheme.styles) {
+    return props;
+  }
+
   const mappedStyles = extend({ root: '' }, resolvedTheme.styles);
   const mappedProps = extend({}, props);
   const renderedVariants = {};
 
-  forEach(variants, (variantValue, variantKey) => {
+  forEach(resolvedTheme.variants, (variantValue, variantKey) => {
     // get variant props as object
     let variantProps;
     if (isPlainObject(variantValue)) {
@@ -149,9 +160,5 @@ export function applyVariantsProps(props, resolvedTheme) {
 }
 
 export function mapThemeProps(props, resolvedTheme) {
-  if (resolvedTheme.variants && resolvedTheme.styles) {
-    const variantsProps = applyVariantsProps(props, resolvedTheme);
-    return variantsProps;
-  }
   return { ...props, theme: resolvedTheme };
 }

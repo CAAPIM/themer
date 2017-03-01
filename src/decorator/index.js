@@ -7,12 +7,17 @@
 /* eslint-disable import/prefer-default-export */
 
 import { themer } from '../';
-import { mapThemeProps } from '../utils';
+import { mapThemeProps, applyVariantsProps } from '../utils';
+
+function variantsWrapper(snippet) {
+  return (props) => snippet(applyVariantsProps(props));
+}
 
 export function createDecorator(customThemer) {
   const themerInstance = customThemer || themer;
   return rawTheme => inputSnippet => {
-    const { snippet, theme } = themerInstance.resolveAttributes(inputSnippet, [rawTheme]);
+    const snippetWithVariants = variantsWrapper(inputSnippet);
+    const { snippet, theme } = themerInstance.resolveAttributes(snippetWithVariants, [rawTheme]);
     return (props) => snippet(mapThemeProps(props, theme));
   };
 }

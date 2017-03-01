@@ -107,16 +107,16 @@ describe('utils', () => {
     it('should be a funciton', () => {
       expect(typeof applyVariantsProps).toBe('function');
     });
-    it('should return props as they are if no theme is found', () => {
+    it('should return props unmodified when no theme is found', () => {
       const testProps = { content: 'Hello' };
       expect(applyVariantsProps(testProps)).toEqual(testProps);
     });
-    it('should return props as they are if no variants are found', () => {
+    it('should return props unmodified when no variants are found', () => {
       const theme = { styles: { root: 'root-class-123', test: 'test-123' } };
       const testProps = { content: 'Hello', theme };
       expect(applyVariantsProps(testProps)).toEqual(testProps);
     });
-    it('should return props as they are if no styles are found', () => {
+    it('should return props unmodified when no styles are found', () => {
       const theme = { variants: { test: true } };
       const testProps = { content: 'Hello', theme };
       expect(applyVariantsProps(testProps)).toEqual(testProps);

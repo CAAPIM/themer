@@ -109,6 +109,19 @@ export function combineByAttributes(attr, obj1 = {}, obj2 = {}) {
   return [obj1[attr], obj2[attr]];
 }
 
+
+/**
+ * Check if variant value matches corresponding prop value
+ *
+ * @param {any} variantPropVal The variant value
+ * @param {any} propVal        The corresponding prop value
+ * @return {boolean}           true if values match
+ * @public
+ */
+function verifyVariantPropValue(variantPropVal, propVal) {
+  return (variantPropVal === propVal) || (!variantPropVal && !propVal);
+}
+
 /**
  * Append variants passed as "true" props to the root style element
  *
@@ -127,6 +140,10 @@ export function applyVariantsProps(props) {
   const renderedVariants = {};
 
   forEach(resolvedTheme.variants, (variantValue, variantKey) => {
+    if (!mappedStyles[variantKey]) {
+      return;
+    }
+
     // get variant props as object
     let variantProps;
     if (isPlainObject(variantValue)) {
@@ -139,13 +156,15 @@ export function applyVariantsProps(props) {
     let variantActive = true;
     forEach(variantProps, (variantPropValue, variantPropKey) => {
       delete mappedProps[variantPropKey];
-      if (props[variantPropKey] !== variantPropValue) {
+      if (!verifyVariantPropValue(variantPropValue, props[variantPropKey])) {
         variantActive = false;
+        return false;
       }
+      return true;
     });
 
     // apply variant class to root, if variant is active
-    if (variantActive && mappedStyles[variantKey]) {
+    if (variantActive) {
       mappedStyles.root += ` ${mappedStyles[variantKey]}`;
       renderedVariants[variantKey] = true;
     }

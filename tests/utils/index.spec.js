@@ -135,6 +135,7 @@ describe('utils', () => {
       const testProps = { content: 'Hello', test: true, theme };
       const mappedProps = {
         content: 'Hello',
+        test: true,
         theme: { styles: { root: 'root-class-123' }, variants: {} },
       };
       expect(applyVariantsProps(testProps)).toEqual(mappedProps);
@@ -164,6 +165,21 @@ describe('utils', () => {
       const mappedProps = {
         content: 'Hello',
         theme: { styles: { root: 'root-class-123', test: 'test-123' }, variants: {} },
+      };
+      expect(applyVariantsProps(testProps)).toEqual(mappedProps);
+    });
+    it('should map variant when variant value and corresponding prop value are falsy', () => {
+      const theme = {
+        styles: { root: 'root-class-123', test1: 'test-1', test2: 'test-2' },
+        variants: { test1: false, test2: null },
+      };
+      const testProps = { content: 'Hello', test2: false, theme };
+      const mappedProps = {
+        content: 'Hello',
+        theme: {
+          styles: { root: 'root-class-123 test-1 test-2', test1: 'test-1', test2: 'test-2' },
+          variants: { test1: true, test2: true },
+        },
       };
       expect(applyVariantsProps(testProps)).toEqual(mappedProps);
     });

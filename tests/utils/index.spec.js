@@ -127,6 +127,7 @@ describe('utils', () => {
       const mappedProps = {
         content: 'Hello',
         theme: { styles: { root: 'root-class-123 test-123', test: 'test-123' }, variants: { test: true } },
+        classes: { root: 'root-class-123 test-123', test: 'test-123' },
       };
       expect(applyVariantsProps(testProps)).toEqual(mappedProps);
     });
@@ -137,6 +138,7 @@ describe('utils', () => {
         content: 'Hello',
         test: true,
         theme: { styles: { root: 'root-class-123' }, variants: {} },
+        classes: { root: 'root-class-123' },
       };
       expect(applyVariantsProps(testProps)).toEqual(mappedProps);
     });
@@ -151,6 +153,7 @@ describe('utils', () => {
       const mappedProps = {
         content: 'Hello',
         theme: { styles: { root: 'root-class-123 test-123', test: 'test-123' }, variants: { test: true } },
+        classes: { root: 'root-class-123 test-123', test: 'test-123' },
       };
       expect(applyVariantsProps(testProps)).toEqual(mappedProps);
     });
@@ -165,6 +168,7 @@ describe('utils', () => {
       const mappedProps = {
         content: 'Hello',
         theme: { styles: { root: 'root-class-123', test: 'test-123' }, variants: {} },
+        classes: { root: 'root-class-123', test: 'test-123' },
       };
       expect(applyVariantsProps(testProps)).toEqual(mappedProps);
     });
@@ -180,6 +184,7 @@ describe('utils', () => {
           styles: { root: 'root-class-123 test-1 test-2', test1: 'test-1', test2: 'test-2' },
           variants: { test1: true, test2: true },
         },
+        classes: { root: 'root-class-123 test-1 test-2', test1: 'test-1', test2: 'test-2' },
       };
       expect(applyVariantsProps(testProps)).toEqual(mappedProps);
     });

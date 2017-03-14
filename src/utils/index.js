@@ -111,6 +111,18 @@ export function combineByAttributes(attr, obj1 = {}, obj2 = {}) {
 
 
 /**
+ * Map resolved theme to snippet props
+ *
+ * @param {Object} props         The props passed to the snippet
+ * @param {Object} resolvedTheme The resolved theme object
+ * @return {Object}              The mapped themed props
+ * @public
+ */
+export function mapThemeProps(props, resolvedTheme) {
+  return { ...props, theme: resolvedTheme, classes: resolvedTheme.styles };
+}
+
+/**
  * Check if variant value matches corresponding prop value
  *
  * @param {any} variantPropVal The variant value
@@ -175,9 +187,5 @@ export function applyVariantsProps(props) {
     styles: mappedStyles,
   });
 
-  return { ...mappedProps, theme: mappedTheme };
-}
-
-export function mapThemeProps(props, resolvedTheme) {
-  return { ...props, theme: resolvedTheme, classes: resolvedTheme.styles };
+  return mapThemeProps(mappedProps, mappedTheme);
 }

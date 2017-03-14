@@ -37,7 +37,7 @@ export const testThemeFunction = {
   }),
 };
 
-export const snippet = (props) =>
-  `<h1 class="${props.theme.styles.root}">` +
-    `${props.content}` +
+export const snippet = ({ classes, content }) =>
+  `<h1 class="${classes.root}">` +
+    `${content}` +
   '</h1>';

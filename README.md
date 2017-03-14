@@ -31,17 +31,13 @@ npm install ca-ui-themer --save
 import themer from 'ca-ui-themer';
 import theme from './styles.css'; // CSS Modules
 
-const headerHtmlSnippet = (props) => {
-  const { styles } = props.theme;
+const headerHtmlSnippet = ({ classes, content }) => `
+  <div class="${classes.root}">
+    <h1 class="${classes.title}">${content}</p>
+  </div>
+`;
 
-  return `
-    <div class="${styles.root}">
-      <h1 class="${styles.title}">'${props.content}'</p>
-    </div>
-  `;
-};
-
-export default themer(headerHtmlSnippet, theme);
+export default themer(theme)(headerHtmlSnippet);
 ```
 
 ## Development

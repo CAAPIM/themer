@@ -194,7 +194,11 @@ describe('utils', () => {
       const testResolvedTheme = { styles: { root: 'root-class-123' } };
       const testProps = { content: 'Hello' };
       const mappedProps = mapThemeProps(testProps, testResolvedTheme);
-      expect(mappedProps).toEqual({ ...testProps, theme: testResolvedTheme });
+      expect(mappedProps).toEqual({
+        ...testProps,
+        theme: testResolvedTheme,
+        classes: testResolvedTheme.styles,
+      });
     });
   });
 });

@@ -179,5 +179,5 @@ export function applyVariantsProps(props) {
 }
 
 export function mapThemeProps(props, resolvedTheme) {
-  return { ...props, theme: resolvedTheme };
+  return { ...props, theme: resolvedTheme, classes: resolvedTheme.styles };
 }

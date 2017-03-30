@@ -4,11 +4,12 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-import { find, isArray, isFunction } from 'lodash';
+import isFunction from 'lodash/isFunction';
+import find from 'lodash/find';
 import forEach from 'lodash/forEach';
 import extend from 'lodash/extend';
 import isPlainObject from 'lodash/isPlainObject';
-import objectAssign from 'object-assign';
+import assign from 'lodash/assign';
 import Themer from './../Themer';
 
 /**
@@ -43,7 +44,7 @@ export function arrayHasFunction(arr = []) {
  * @public
  */
 export function resolveArray(arrayToResolve, ...args) {
-  const arr = isArray(arrayToResolve) ? arrayToResolve : [arrayToResolve];
+  const arr = Array.isArray(arrayToResolve) ? arrayToResolve : [arrayToResolve];
 
   return arr.reduce((accumulator, val) => {
     if (!val) {
@@ -99,7 +100,7 @@ export function combineByAttributes(attr, obj1 = {}, obj2 = {}) {
   }
 
   if (isPlainObject(obj1[attr]) && isPlainObject(obj2[attr])) {
-    return objectAssign(obj1[attr], obj2[attr]);
+    return assign(obj1[attr], obj2[attr]);
   }
 
   if (Array.isArray(obj1[attr])) {

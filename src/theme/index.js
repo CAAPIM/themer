@@ -5,7 +5,8 @@
  */
 
 import uuid from 'uuid';
-import { isObject, isFunction } from 'lodash';
+import isFunction from 'lodash/isFunction';
+import isPlainObject from 'lodash/isPlainObject';
 import {
   resolveValue,
   combineByAttributes,
@@ -52,7 +53,7 @@ export default class Theme {
    * @throws {Error}       If the theme object does not exist or is of wrong type
    */
   static validate(theme) {
-    if (!isObject(theme) && !isFunction(theme)) {
+    if (!isPlainObject(theme) && !isFunction(theme)) {
       throw new Error('Theme must either an object or function');
     }
 

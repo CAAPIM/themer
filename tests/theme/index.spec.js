@@ -87,7 +87,7 @@ describe('theme', () => {
 
     expect(typeof resolvedTheme).toBe('object');
     expect(resolvedTheme.styles).toEqual(
-      testFunctionTheme.styles(null, globalVars)
+      testFunctionTheme.styles(null, globalVars),
     );
   });
 

@@ -4,6 +4,8 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
+// @flow
+
 import uuid from 'uuid';
 import isFunction from 'lodash/isFunction';
 import isPlainObject from 'lodash/isPlainObject';

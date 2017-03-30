@@ -4,6 +4,8 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
+// @flow
+
 import isFunction from 'lodash/isFunction';
 import find from 'lodash/find';
 import forEach from 'lodash/forEach';

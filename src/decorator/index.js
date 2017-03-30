@@ -5,6 +5,7 @@
  */
 
 /* eslint-disable import/prefer-default-export */
+// @flow
 
 import { themer } from '../';
 import { mapThemeProps, applyVariantsProps } from '../utils';

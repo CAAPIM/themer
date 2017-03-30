@@ -4,6 +4,8 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
+// @flow
+
 import flowRight from 'lodash/flowRight';
 
 export default class Middleware {

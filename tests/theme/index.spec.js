@@ -24,6 +24,13 @@ describe('theme', () => {
     expect(theme.get().styles).toEqual(testThemeSimple.styles);
   });
 
+  it('should allow to set themes via `setup` method', () => {
+    const theme = new Theme();
+    theme.setup([testThemeSimple]);
+
+    expect(theme.get().styles).toEqual(testThemeSimple.styles);
+  });
+
   it('should provide a getter for the theme id', () => {
     const theme = new Theme([testThemeSimple]);
 
@@ -52,9 +59,17 @@ describe('theme', () => {
     expect(resolvedTheme.styles).toEqual(testThemeSimple.styles);
   });
 
-  it('should throw an error if theme is not an object or function', () => {
+  it('should throw an error if theme is not an object', () => {
     // $FlowFixMe
     expect(() => new Theme([1])).toThrow();
+  });
+
+  it('should throw an error theme.styles is not an object or a function', () => {
+    expect(() => new Theme([{ styles: 1 }])).toThrow();
+  });
+
+  it('should throw an error theme.variables is not an object or a function', () => {
+    expect(() => new Theme([{ variables: 1 }])).toThrow();
   });
 
   it('should return an object of variants if supplied', () => {

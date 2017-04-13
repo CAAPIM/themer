@@ -31,7 +31,7 @@ export function createThemer(options?: Object = {}) {
  * @return {Boolean}    If any values are of type function
  * @public
  */
-export function arrayHasFunction(arr: Array<any> = []) {
+export function arrayHasFunction(arr: Array<any>) {
   const hasFunction = find(arr, (val: any) => isFunction(val));
 
   return !!hasFunction;

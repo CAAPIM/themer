@@ -11,11 +11,17 @@ import flowRight from 'lodash/flowRight';
 export default class Middleware {
 
   /**
+   * Registry of middlewares
+   * @type {Array<Function>}
+   */
+  registry: Array<Function>;
+
+  /**
    * Creates a new Middleware instance
    *
    * @param {Array}  middleware middleware functions to run
    */
-  constructor(middleware = []) {
+  constructor(middleware?: Array<Function> = []) {
     this.registry = [];
 
     middleware.forEach(func => this.set(func));
@@ -35,7 +41,7 @@ export default class Middleware {
    *
    * @param {Function[]} func
    */
-  set(...middlewares) {
+  set(...middlewares: Array<Function>) {
     middlewares.forEach(func => this.registry.push(func));
   }
 
@@ -47,7 +53,7 @@ export default class Middleware {
    * @param  {Object}   theme   Executes all middleware function on snippet
    * @return {Function}         Resolved results of all middleware methods
    */
-  resolve(snippet, theme) {
+  resolve(snippet: any, theme: Object) {
     return flowRight(this.registry)(snippet, theme);
   }
 

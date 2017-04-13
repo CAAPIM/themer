@@ -10,15 +10,15 @@
 import { themer } from '../';
 import { mapThemeProps, applyVariantsProps } from '../utils';
 
-function variantsWrapper(snippet) {
-  return (props) => snippet(applyVariantsProps(props));
+function variantsWrapper(snippet: Function) {
+  return (props: Object) => snippet(applyVariantsProps(props));
 }
 
-export function createDecorator(customThemer) {
+export function createDecorator(customThemer?: Object) {
   const themerInstance = customThemer || themer;
-  return rawTheme => inputSnippet => {
+  return (rawTheme: Object) => (inputSnippet: Function) => {
     const snippetWithVariants = variantsWrapper(inputSnippet);
     const { snippet, theme } = themerInstance.resolveAttributes(snippetWithVariants, [rawTheme]);
-    return (props) => snippet(mapThemeProps(props, theme));
+    return (props: Object) => snippet(mapThemeProps(props, theme));
   };
 }

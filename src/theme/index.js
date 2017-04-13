@@ -17,9 +17,15 @@ import {
 export default class Theme {
 
   /**
+   * Combined theme object
+   * @type {Object}
+   */
+  theme: Object;
+
+  /**
    * Creates a new Theme instance
    */
-  constructor(themes) {
+  constructor(themes?: Array<Object>) {
     this.theme = {};
 
     this.setup(themes);
@@ -28,10 +34,10 @@ export default class Theme {
   /**
    * Run setup actions
    *
-   * @param  {Array} themes Themes collection passed as constructor prop
+   * @param  {Array<Object>} themes Themes collection passed as constructor prop
    * @return {Theme}
    */
-  setup(themes) {
+  setup(themes?: Array<Object>) {
     if (themes && themes.length) {
       this.theme = Theme.combine(themes);
     }
@@ -54,9 +60,17 @@ export default class Theme {
    * @param  {*}     theme The theme object
    * @throws {Error}       If the theme object does not exist or is of wrong type
    */
-  static validate(theme) {
-    if (!isPlainObject(theme) && !isFunction(theme)) {
-      throw new Error('Theme must either an object or function');
+  static validate(theme: Object) {
+    if (!theme || !isPlainObject(theme)) {
+      throw new Error('Theme must be an object');
+    }
+
+    if (theme.styles && !isPlainObject(theme.styles) && !isFunction(theme.styles)) {
+      throw new Error('Theme styles must be either an object or a function');
+    }
+
+    if (theme.variables && !isPlainObject(theme.variables) && !isFunction(theme.variables)) {
+      throw new Error('Theme variables must be either an object or a function');
     }
 
     return true;
@@ -72,7 +86,7 @@ export default class Theme {
    * @throws {Error}        If the theme object has not been passed in
    * @public
    */
-  static parse(theme) {
+  static parse(theme: Object) {
     Theme.validate(theme);
 
     if (theme.styles || theme.variables) {
@@ -91,14 +105,14 @@ export default class Theme {
    * @param  {Array} themes Array of theme objects
    * @return {Array}        Array of combined and formatted theme objects
    */
-  static combine(themes) {
+  static combine(themes: Array<Object>): Object {
     if (!themes || !themes.length) {
       return {};
     }
 
     const truthy = val => val;
 
-    const resolvedTheme = themes
+    const resolvedTheme: Object = themes
       .map(Theme.parse)
       .filter(truthy)
       .reduce((previousTheme, currentTheme) => ({
@@ -121,7 +135,7 @@ export default class Theme {
     return this.theme.id;
   }
 
-  resolve(globalVars) {
+  resolve(globalVars?: Object) {
     const variables = resolveValue(this.theme.variables, globalVars);
     const styles = resolveValue(this.theme.styles, variables);
     const variants = resolveValue(this.theme.variants);

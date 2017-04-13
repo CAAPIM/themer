@@ -18,7 +18,7 @@ describe('Themer', () => {
     const spy2 = jest.fn().mockImplementation((component) => component);
     const testInstance = new Themer();
     testInstance.setMiddleware(spy1, spy2);
-    testInstance.resolveAttributes(snippet, testThemeSimple);
+    testInstance.resolveAttributes(snippet, [testThemeSimple]);
 
     expect(spy1).toHaveBeenCalled();
     expect(spy2).toHaveBeenCalled();

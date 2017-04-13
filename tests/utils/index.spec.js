@@ -69,6 +69,7 @@ describe('utils', () => {
 
   describe('combineByAttributes', () => {
     it('should return an empty object if no argument is passed', () => {
+      // $FlowFixMe
       const combinedObj = combineByAttributes();
       expect(combinedObj).toEqual({});
     });

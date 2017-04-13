@@ -53,6 +53,7 @@ describe('theme', () => {
   });
 
   it('should throw an error if theme is not an object or function', () => {
+    // $FlowFixMe
     expect(() => new Theme([1])).toThrow();
   });
 
@@ -95,6 +96,7 @@ describe('theme', () => {
 
   describe('combine', () => {
     it('should return an empty object if no argument is passed', () => {
+      // $FlowFixMe
       const combinedTheme = Theme.combine();
       expect(combinedTheme).toEqual({});
     });

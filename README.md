@@ -27,6 +27,21 @@ This library is meant to be used in all CA components.
 npm install ca-ui-themer --save
 ```
 
+## Usage with Variants
+Variants require you to use `root` as your root element.
+
+```js
+{
+  styles: {
+    root: 'big-text-class',
+    stop: 'green-grass-class',
+  },
+  variants: {
+    stop: false
+  }
+}
+```
+
 ## Usage with CSS Modules
 
 ```js

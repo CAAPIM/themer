@@ -1,4 +1,6 @@
 # Themer
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/CAAPIM/themer.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/CAAPIM/themer.svg?branch=master)](https://travis-ci.org/CAAPIM/themer)
 [![codecov](https://codecov.io/gh/CAAPIM/themer/branch/master/graph/badge.svg)](https://codecov.io/gh/CAAPIM/themer)
 [![dependencies](https://david-dm.org/CAAPIM/themer.svg)](https://david-dm.org/CAAPIM/themer)

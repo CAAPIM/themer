@@ -4,6 +4,8 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
+// @flow
+
 export const testThemeSimple = {
   styles: {
     root: 'big-text-class',
@@ -32,12 +34,17 @@ export const testThemeFunction = {
   variables: {
     color: 'blue',
   },
-  styles: (_, vars) => ({
+  styles: (_: any, vars?: Object = {}) => ({
     root: { color: vars.color },
   }),
 };
 
-export const snippet = ({ classes, content }) =>
+type Props = {
+  classes?: Object,
+  content?: string,
+};
+
+export const snippet = ({ classes = {}, content = '' }: Props) =>
   `<h1 class="${classes.root}">` +
     `${content}` +
   '</h1>';

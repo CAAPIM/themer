@@ -4,6 +4,8 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
+// @flow
+
 import {
   createThemer,
   arrayHasFunction,
@@ -67,6 +69,7 @@ describe('utils', () => {
 
   describe('combineByAttributes', () => {
     it('should return an empty object if no argument is passed', () => {
+      // $FlowFixMe
       const combinedObj = combineByAttributes();
       expect(combinedObj).toEqual({});
     });

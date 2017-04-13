@@ -4,12 +4,17 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
+// @flow
+
 import {
   createThemer as create,
   mapThemeProps,
   applyVariantsProps,
 } from './utils';
 import { createDecorator } from './decorator';
+
+// export flow type for theme props
+export type { ProvidedThemeProps } from './utils';
 
 const themer = create();
 

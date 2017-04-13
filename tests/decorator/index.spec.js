@@ -4,6 +4,8 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
+// @flow
+
 import { create, mapThemeProps } from '../../src';
 import { createDecorator } from '../../src/decorator';
 import {

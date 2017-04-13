@@ -1,7 +1,8 @@
 [ignore]
+<PROJECT_ROOT>/coverage/.*
+<PROJECT_ROOT>/flow-coverage/.*
+<PROJECT_ROOT>/lib/.*
+.*/node_modules/findup/.*
 .*/node_modules/config-chain/.*
 .*/node_modules/npmconf/.*
-.*/node_modules/findup/.*
-.*/lib/.*
-.*/coverage/.*
-.*/flow-coverage/.*
+.*/node_modules/flow-coverage-report/.*

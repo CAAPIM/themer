@@ -4,6 +4,8 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
+// @flow
+
 import isFunction from 'lodash/isFunction';
 import find from 'lodash/find';
 import forEach from 'lodash/forEach';
@@ -18,7 +20,7 @@ import Themer from './../Themer';
  * @param  {Object} options Themer options
  * @return {Themer}
  */
-export function createThemer(options = {}) {
+export function createThemer(options?: Object = {}) {
   return new Themer(options);
 }
 
@@ -29,8 +31,8 @@ export function createThemer(options = {}) {
  * @return {Boolean}    If any values are of type function
  * @public
  */
-export function arrayHasFunction(arr = []) {
-  const hasFunction = find(arr, (val) => isFunction(val));
+export function arrayHasFunction(arr: Array<any>) {
+  const hasFunction = find(arr, (val: any) => isFunction(val));
 
   return !!hasFunction;
 }
@@ -43,7 +45,7 @@ export function arrayHasFunction(arr = []) {
  * @return {Object}                Contains only flat properties, no functions
  * @public
  */
-export function resolveArray(arrayToResolve, ...args) {
+export function resolveArray(arrayToResolve: any, ...args: Array<any>) {
   const arr = Array.isArray(arrayToResolve) ? arrayToResolve : [arrayToResolve];
 
   return arr.reduce((accumulator, val) => {
@@ -67,7 +69,7 @@ export function resolveArray(arrayToResolve, ...args) {
  * @param  {Object} globalVariables Variables defined by the gloval application theme
  * @return {Object}           Resolved theme variables, where local vars take priority
  */
-export function resolveValue(attr, ...args) {
+export function resolveValue(attr: any, ...args: Array<any>) {
   if (isFunction(attr) || arrayHasFunction(attr)) {
     return resolveArray(attr, ...args);
   }
@@ -86,7 +88,7 @@ export function resolveValue(attr, ...args) {
  * @return {Array}         Array containing both attribute value from both themes
  * @public
  */
-export function combineByAttributes(attr, obj1 = {}, obj2 = {}) {
+export function combineByAttributes(attr: string, obj1: Object = {}, obj2: Object = {}) {
   if (!obj1[attr] && !obj2[attr]) {
     return {};
   }
@@ -110,6 +112,11 @@ export function combineByAttributes(attr, obj1 = {}, obj2 = {}) {
   return [obj1[attr], obj2[attr]];
 }
 
+/**
+ * Type definition for theme-related props
+ * @type {ProvidedThemeProps}
+ */
+export type ProvidedThemeProps = { theme: Object, classes: Object };
 
 /**
  * Map resolved theme to snippet props
@@ -119,7 +126,10 @@ export function combineByAttributes(attr, obj1 = {}, obj2 = {}) {
  * @return {Object}              The mapped themed props
  * @public
  */
-export function mapThemeProps(props, resolvedTheme) {
+export function mapThemeProps<OriginalProps: Object>(
+  props: OriginalProps,
+  resolvedTheme: Object,
+): OriginalProps & ProvidedThemeProps {
   return { ...props, theme: resolvedTheme, classes: resolvedTheme.styles };
 }
 
@@ -131,25 +141,25 @@ export function mapThemeProps(props, resolvedTheme) {
  * @return {boolean}           true if values match
  * @public
  */
-function verifyVariantPropValue(variantPropVal, propVal) {
+function verifyVariantPropValue(variantPropVal: any, propVal: any) {
   return (variantPropVal === propVal) || (!variantPropVal && !propVal);
 }
 
 /**
  * Append variants passed as "true" props to the root style element
  *
- * @param {Object} props The props passed to the render method
- * @return {Object}      The styles as per post-variant processing
+ * @param {T:Object} props The props passed to the render method
+ * @return {T}             The styles as per post-variant processing
  * @public
  */
-export function applyVariantsProps(props) {
+export function applyVariantsProps<T: Object>(props: T): T {
   const resolvedTheme = props.theme;
   if (!resolvedTheme || !resolvedTheme.variants || !resolvedTheme.styles) {
     return props;
   }
 
   const mappedStyles = extend({ root: '' }, resolvedTheme.styles);
-  const mappedProps = extend({}, props);
+  const mappedProps: T = extend({}, props);
   const renderedVariants = {};
 
   forEach(resolvedTheme.variants, (variantValue, variantKey) => {

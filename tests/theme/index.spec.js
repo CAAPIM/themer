@@ -4,6 +4,8 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
+// @flow
+
 import Theme from '../../src/theme';
 import { testThemeSimple, testThemeVariants } from '../fixtures';
 
@@ -18,6 +20,13 @@ describe('theme', () => {
 
   it('should provide a getter for the unresolved theme object', () => {
     const theme = new Theme([testThemeSimple]);
+
+    expect(theme.get().styles).toEqual(testThemeSimple.styles);
+  });
+
+  it('should allow to set themes via `setup` method', () => {
+    const theme = new Theme();
+    theme.setup([testThemeSimple]);
 
     expect(theme.get().styles).toEqual(testThemeSimple.styles);
   });
@@ -50,8 +59,17 @@ describe('theme', () => {
     expect(resolvedTheme.styles).toEqual(testThemeSimple.styles);
   });
 
-  it('should throw an error if theme is not an object or function', () => {
+  it('should throw an error if theme is not an object', () => {
+    // $FlowFixMe
     expect(() => new Theme([1])).toThrow();
+  });
+
+  it('should throw an error theme.styles is not an object or a function', () => {
+    expect(() => new Theme([{ styles: 1 }])).toThrow();
+  });
+
+  it('should throw an error theme.variables is not an object or a function', () => {
+    expect(() => new Theme([{ variables: 1 }])).toThrow();
   });
 
   it('should return an object of variants if supplied', () => {
@@ -93,6 +111,7 @@ describe('theme', () => {
 
   describe('combine', () => {
     it('should return an empty object if no argument is passed', () => {
+      // $FlowFixMe
       const combinedTheme = Theme.combine();
       expect(combinedTheme).toEqual({});
     });

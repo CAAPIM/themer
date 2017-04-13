@@ -13,6 +13,9 @@ import {
 } from './utils';
 import { createDecorator } from './decorator';
 
+// export flow type for theme props
+export type { ProvidedThemeProps } from './utils';
+
 const themer = create();
 
 export {

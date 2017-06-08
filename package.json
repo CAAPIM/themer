@@ -42,7 +42,7 @@
     "jest": "^19.0.2",
     "rimraf": "^2.6.1",
     "semantic-release": "^6.3.2",
-    "validate-commit-msg": "^2.11.2"
+    "validate-commit-msg": "2.12.1"
   },
   "keywords": [
     "JS",

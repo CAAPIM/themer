@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",
-    "babel-eslint": "^7.2.1",
+    "babel-eslint": "^8.2.2",
     "babel-preset-ca": "^1.1.0",
     "codecov": "^2.1.0",
     "commitizen": "^2.9.6",

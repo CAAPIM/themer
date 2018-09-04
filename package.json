@@ -30,7 +30,7 @@
     "babel-cli": "^6.24.0",
     "babel-eslint": "^7.2.1",
     "babel-preset-ca": "^1.1.0",
-    "codecov": "^2.1.0",
+    "codecov": "^3.1.0",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "^3.18.0",

@@ -31,7 +31,7 @@
     "babel-eslint": "^7.2.1",
     "babel-preset-ca": "^1.1.0",
     "codecov": "^2.1.0",
-    "commitizen": "^2.9.6",
+    "commitizen": "^3.0.4",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "^3.18.0",
     "eslint-config-ca": "^2.0.0",

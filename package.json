@@ -35,7 +35,7 @@
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "^3.18.0",
     "eslint-config-ca": "^2.0.0",
-    "flow-bin": "^0.42.0",
+    "flow-bin": "^0.106.3",
     "flow-copy-source": "^1.1.0",
     "flow-coverage-report": "^0.3.0",
     "husky": "^0.13.3",
